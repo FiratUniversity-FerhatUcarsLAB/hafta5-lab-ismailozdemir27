@@ -128,110 +128,122 @@ public class FizikFormul {
 ÖDEV JAVA KODU YAZ 
 
 
-    import java.util.Scanner;
+    package fizikFormül;
 
-public class SepetHesap {
+import java.util.Scanner;
 
-    // Sabitler
-    final static double VAT_RATE = 0.18;      // KDV Oranı (%18)
-    final static double SHIPPING_FEE = 29.99; // Sabit kargo ücreti (TL)
-    final static double FREE_SHIPPING_LIMIT = 300.0; // Ücretsiz kargo limiti (TL)
+public class FizikFormul {
 
-    // METOT 1: Bir ürünün toplam fiyatını hesaplar (fiyat * adet)
-    public static double calculateLineTotal(double price, int quantity) {
-        return price * quantity;
+    // Sabit: Yerçekimi ivmesi
+    final static double GRAVITY = 9.8; // m/s²
+
+    // METOT 1: Hız hesapla (v = s / t)
+    public static double calculateVelocity(double distance, double time) {
+        // v = mesafe / zaman
+        return distance / time;
     }
 
-    // METOT 2: Sepetteki 3 ürünün ara toplamını hesaplar
-    public static double calculateSubtotal(double line1, double line2, double line3) {
-        return line1 + line2 + line3;
+    // METOT 2: İvme hesapla (a = Δv / t)
+    public static double calculateAcceleration(double velocityChange, double time) {
+        // a = hiz degisimi / zaman
+        return velocityChange / time;
     }
 
-    // METOT 3: İndirim tutarını hesaplar
-    public static double calculateDiscountAmount(double subtotal, double discountPercentage) {
-        return subtotal * (discountPercentage / 100.0);
+    // METOT 3: Kuvvet hesapla (F = m * a)
+    public static double calculateForce(double mass, double acceleration) {
+        // F = kutle * ivme
+        return mass * acceleration;
     }
 
-    // METOT 4: İndirimli fiyatı hesaplar
-    public static double applyDiscount(double subtotal, double discountAmount) {
-        return subtotal - discountAmount;
+    // METOT 4: İş hesapla (W = F * d)
+    public static double calculateWork(double force, double distance) {
+        // W = kuvvet * mesafe
+        return force * distance;
     }
 
-    // METOT 5: KDV tutarını hesaplar
-    public static double calculateVAT(double discountedTotal, double vatRate) {
-        return discountedTotal * vatRate;
+    // METOT 5: Güç hesapla (P = W / t)
+    public static double calculatePower(double work, double time) {
+        // P = iş / zaman
+        return work / time;
     }
 
-    // METOT 6: Genel toplamı hesaplar
-    public static double calculateGrandTotal(double discountedTotal, double vatAmount, double shippingFee) {
-        return discountedTotal + vatAmount + shippingFee;
+    // METOT 6: Kinetik enerji (KE = 0.5 * m * v²)
+    public static double calculateKineticEnergy(double mass, double velocity) {
+        // KE = 0.5 * m * v²
+        return 0.5 * mass * Math.pow(velocity, 2);
+    }
+
+    // METOT 7: Potansiyel enerji (PE = m * g * h)
+    public static double calculatePotentialEnergy(double mass, double gravity, double height) {
+        // PE = m * g * h
+        return mass * gravity * height;
+    }
+
+    // METOT 8: Momentum (p = m * v)
+    public static double calculateMomentum(double mass, double velocity) {
+        // p = m * v
+        return mass * velocity;
     }
 
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
 
-        System.out.println("=== 🛒 E-TICARET SEPET HESAPLAYICI ===");
-        System.out.println("\nLütfen 3 ürünün bilgilerini girin:");
+        System.out.println("=== ⚙️ FİZİK FORMÜL ASİSTANI ===\n");
 
-        // Ürün Bilgileri
-        System.out.println("\nÜRÜN 1:");
-        System.out.print("  Birim Fiyat (TL): ");
-        double price1 = input.nextDouble();
-        System.out.print("  Adet: ");
-        int qty1 = input.nextInt();
+        // TEMEL ÖLÇÜMLER
+        System.out.println("TEMEL ÖLÇÜMLER:");
+        System.out.print("Kütle (kg): ");
+        double mass = input.nextDouble();
 
-        System.out.println("\nÜRÜN 2:");
-        System.out.print("  Birim Fiyat (TL): ");
-        double price2 = input.nextDouble();
-        System.out.print("  Adet: ");
-        int qty2 = input.nextInt();
+        System.out.print("Mesafe (m): ");
+        double distance = input.nextDouble();
 
-        System.out.println("\nÜRÜN 3:");
-        System.out.print("  Birim Fiyat (TL): ");
-        double price3 = input.nextDouble();
-        System.out.print("  Adet: ");
-        int qty3 = input.nextInt();
+        System.out.print("Zaman (s): ");
+        double time = input.nextDouble();
 
-        System.out.print("\nİndirim Kuponu Yüzdesi (%): ");
-        double discountPercent = input.nextDouble();
+        System.out.print("Hız değişimi (m/s): ");
+        double deltaV = input.nextDouble();
+
+        System.out.print("Yükseklik (m): ");
+        double height = input.nextDouble();
 
         // === HESAPLAMALAR ===
-
-        double line1Total = calculateLineTotal(price1, qty1);
-        double line2Total = calculateLineTotal(price2, qty2);
-        double line3Total = calculateLineTotal(price3, qty3);
-
-        double subtotal = calculateSubtotal(line1Total, line2Total, line3Total);
-        double discountAmount = calculateDiscountAmount(subtotal, discountPercent);
-        double discountedTotal = applyDiscount(subtotal, discountAmount);
-        double vatAmount = calculateVAT(discountedTotal, VAT_RATE);
-        
-        // Eğer discountedTotal >= limit ise, 0 çarpılır → ücretsiz
-        // Aksi halde 1 çarpılır → normal ücret eklenir
-        double shippingFee = SHIPPING_FEE * (discountedTotal < FREE_SHIPPING_LIMIT ? 1 : 0);
-
-        double grandTotal = calculateGrandTotal(discountedTotal, vatAmount, shippingFee);
+        double velocity = calculateVelocity(distance, time);
+        double acceleration = calculateAcceleration(deltaV, time);
+        double force = calculateForce(mass, acceleration);
+        double work = calculateWork(force, distance);
+        double power = calculatePower(work, time);
+        double kineticEnergy = calculateKineticEnergy(mass, velocity);
+        double potentialEnergy = calculatePotentialEnergy(mass, GRAVITY, height);
+        double momentum = calculateMomentum(mass, velocity);
 
         // === SONUÇLARI YAZDIR ===
         System.out.println("\n========================================");
-        System.out.println("           🧾 SİPARİŞ ÖZETİ");
+        System.out.println("          🧮 HESAPLAMA SONUÇLARI");
         System.out.println("========================================");
 
-        System.out.printf("Ürün 1 Toplam (%.2f TL x %d): %.2f TL\n", price1, qty1, line1Total);
-        System.out.printf("Ürün 2 Toplam (%.2f TL x %d): %.2f TL\n", price2, qty2, line2Total);
-        System.out.printf("Ürün 3 Toplam (%.2f TL x %d): %.2f TL\n", price3, qty3, line3Total);
-        System.out.println("----------------------------------------");
-        System.out.printf("Ara Toplam                   : %.2f TL\n", subtotal);
+        System.out.println("\nHIZ ve HAREKET:");
+        System.out.printf("  Hız (v = s/t)              : %.2f m/s\n", velocity);
+        System.out.printf("  İvme (a = Δv/t)            : %.2f m/s²\n", acceleration);
 
-        System.out.printf("\nİndirim Tutarı (%%%.0f)         : -%.2f TL\n", discountPercent, discountAmount);
-        System.out.printf("İndirimli Toplam             : %.2f TL\n", discountedTotal);
+        System.out.println("\nKUVVET ve İŞ:");
+        System.out.printf("  Kuvvet (F = m*a)           : %.2f N\n", force);
+        System.out.printf("  İş (W = F*d)               : %.2f J\n", work);
+        System.out.printf("  Güç (P = W/t)              : %.2f W\n", power);
 
-        System.out.printf("\nKDV Tutarı (%%%.0f)             : +%.2f TL\n", (VAT_RATE * 100), vatAmount);
-        System.out.printf("Kargo Ücreti                 : +%.2f TL %s\n", shippingFee, (shippingFee == 0 ? "(Ücretsiz 🎁)" : ""));
-        System.out.println("----------------------------------------");
-        System.out.printf("💰 GENEL TOPLAM               : %.2f TL\n", grandTotal);
-        System.out.println("========================================");
+        System.out.println("\nENERJİ:");
+        System.out.printf("  Kinetik Enerji (KE)        : %.2f J\n", kineticEnergy);
+        System.out.printf("  Potansiyel Enerji (PE)     : %.2f J\n", potentialEnergy);
+        System.out.printf("  Toplam Enerji (E = KE+PE)  : %.2f J\n", (kineticEnergy + potentialEnergy));
+
+        System.out.println("\nMOMENTUM:");
+        System.out.printf("  Momentum (p = m*v)         : %.2f kg·m/s\n", momentum);
+
+        System.out.println("\n========================================");
 
         input.close();
     }
 }
+
+
+   
